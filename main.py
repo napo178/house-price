@@ -164,7 +164,7 @@ inp_df = inp_df.drop('date',axis=1)
 st.write(inp_df)
 
 
-loaded_model = load_model('project/',custom_objects=None,compile=True)
+loaded_model = load_model('project/my_model/',custom_objects=None,compile=True)
 
 predictions = loaded_model.predict(inp_df)
 preds = predictions.tolist()
