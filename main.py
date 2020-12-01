@@ -17,11 +17,12 @@ st.write("""
 ### Predicting housing price in King County.
 """)
 st.write("""
-This data is taken from Kaggle: [[DATA](https://www.kaggle.com/harlfoxem/housesalesprediction)]
+This [dataset](https://www.kaggle.com/harlfoxem/housesalesprediction) contains house sale prices for King County, which includes Seattle. It includes homes sold between May 2014 and May 2015.
 """)
 
 st.write("""
-In this project we are going to use Neural Networks to predict the price of the house. It's a 5 layers Neural Network and you can see hows easy is to build one. It's only takess couple lines of code to do it and you can see the code by clicking on button below.
+In this project we are going to use `Neural Networks` to predict the price.
+It's very easy to do, and you can check the code by clicking on button below.
 """)
 
 if st.button('Show the code'):
@@ -41,10 +42,12 @@ model.compile(optimizer='adam',loss='mse')"""
     st.code(code,language='python')
 
 st.write("""
-Here you can see some usefull charts by your chooise.
+#### You can find this project on GitHub.
+[[Model Building](https://github.com/p4v10/Housing-Price-Predicting)]
+[[Model Deployment](https://github.com/p4v10/Heart_Disease_Streamlit)]
 """)
 
-selector = st.selectbox('Chose the graph',('Price Distribution','Number of bedrooms','Price by SQFT','Price by bedrooms','Price by region','Price by waterfront'))
+selector = st.selectbox('Select the chart that you need',('Price Distribution','Number of bedrooms','Price by SQFT','Price by bedrooms','Price by region','Price by waterfront'))
 if selector == 'Price Distribution':
     price_graph = plt.figure(figsize=(10,6))
     sns.distplot(df['price'],color='crimson')
@@ -122,7 +125,7 @@ def user_input_features():
     yr_built = st.sidebar.number_input('The year the house was initially built',min_value=0,max_value=2020,value=1960)
     yr_renovated = st.sidebar.number_input('The year of the house’s last renovation',0,2020,2010)
     lat = st.sidebar.slider('Lattitude', 47.1559,47.7776,47.5432)
-    long = st.sidebar.slider('Longitude', -122.51899999999999,-121.315,-121.163)
+    long = st.sidebar.slider('Longitude', -122.518,-121.315,-121.163)
     sqft_living15 = st.sidebar.number_input('The square footage of interior housing living space for the nearest 15 neighbors',min_value=399,max_value=6210,value=2471)
     sqft_lot15 = st.sidebar.number_input('The square footage of the land lots of the nearest 15 neighbors',min_value=651,max_value=871200,value=63123)
     date = st.sidebar.date_input('Date of the home sale',value=datetime.date(2015,7,9))
@@ -167,4 +170,4 @@ predictions = loaded_model.predict(inp_df)
 preds = predictions.tolist()
 new_preds = preds[0][0]
 new_preds = str(new_preds)
-st.write(new_preds[:-6])
+st.write("It's looks like the approximate price of your house is: " + new_preds[:-6] + "$")
