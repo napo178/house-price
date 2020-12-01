@@ -14,7 +14,7 @@ st.set_page_config(page_title='Predict House Price', page_icon='house')
 df = pd.read_csv("house_data.csv")
 
 st.write("""
-### Predicting housing price in Seattle area.
+### Predicting housing price in King County.
 """)
 st.write("""
 This data is taken from Kaggle: [[DATA](https://www.kaggle.com/harlfoxem/housesalesprediction)]
@@ -109,9 +109,9 @@ st.sidebar.header('Please provide your parameters to calculate price of your hou
 
 def user_input_features():
     bedrooms = st.sidebar.number_input('Number of Bedrooms',min_value=1,max_value=10,value=3,step=1)
-    bathrooms = st.sidebar.number_input('Number of Bathrooms',min_value=1.0,max_value=5.0,value=2.0,step=0.25)
-    sqft_living = st.sidebar.number_input('Square footage of the apartments interior living space',min_value=370,max_value=13540,value=5715)
-    sqft_lot = st.sidebar.number_input('Square footage of the land space',min_value=520,max_value=1651359,value=9711)
+    bathrooms = st.sidebar.number_input('Number of Bathrooms',min_value=1.0,max_value=5.0,value=1.0,step=0.25)
+    sqft_living = st.sidebar.number_input('Square footage of the apartments interior living space',min_value=370,max_value=13540,value=1215)
+    sqft_lot = st.sidebar.number_input('Square footage of the land space',min_value=520,max_value=1651359,value=1511)
     floors = st.sidebar.number_input('Number of floors',min_value=1,max_value=5,value=1)
     waterfront_c = st.sidebar.selectbox('Whether the apartment was overlooking the waterfront or not',('Yes','No'))
     view = st.sidebar.number_input('An index from 0 to 4 of how good the view of the property was',0,4,1)
@@ -163,4 +163,8 @@ st.write(inp_df)
 
 loaded_model = load_model('project/',custom_objects=None,compile=True)
 
-st.write(loaded_model.predict(inp_df))
+predictions = loaded_model.predict(inp_df)
+preds = predictions.tolist()
+new_preds = preds[0][0]
+new_preds = str(new_preds)
+st.write(new_preds[:-6])
